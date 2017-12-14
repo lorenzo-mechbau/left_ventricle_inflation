@@ -1,0 +1,24 @@
+# read in description
+gfx read node results/LVInflation_trilinear_2-8-8.part0.exnode
+gfx read element results/LVInflation_trilinear_2-8-8.part0.exelem
+
+gfx create window 1
+
+# display deformed geometry
+gfx define faces egroup Region
+gfx modify g_element Region lines coordinate DeformedGeometry select_on material default selected_material default_selected
+
+#gfx modify g_element Region surfaces coordinate DeformedGeometry select_on material tissue selected_material default_selected render_shaded
+
+gfx modify g_element Region node_points coordinate DeformedGeometry glyph sphere General size "0.1*0.1*0.1" centre 0,0,0 font default select_on material default selected_material default_selected
+
+# display undeformed lines
+gfx modify g_element Region lines coordinate Geometry select_on material green selected_material default_selected
+
+gfx create axes length 5 material default
+gfx draw axes
+
+gfx edit scene
+gfx modify window 1 set antialias 2
+gfx modify window 1 view parallel eye_point -4.76837e-07 -109.717 -12.7911 interest_point -4.76837e-07 -4.76837e-07 -12.7911 up_vector 0 0 1 view_angle 40 near_clipping_plane 5.48585 far_clipping_plane 222.666 relative_viewport ndc_placement -1 1 2 2 viewport_coordinates 0 0 1 1;
+gfx modify window 1 layout simple ortho_axes z -y eye_spacing 0.25 width 503 height 512;
