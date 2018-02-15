@@ -262,8 +262,8 @@ EquationsSetSetUp(equationsSet)
 
 p = 0.0
 for j in range(0,1):
-    pressure_increments = [1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 1.0]
-    tolerances = [1e-5, 1e-5, 1e-5, 1e-5, 1e-5, 1e-5, 1e-5]
+    pressure_increments = [1.0, 1.0, 1.0, 1.0, 1.0]
+    tolerances = [1e-14, 1e-14, 1e-14, 1e-14, 1e-14, 1e-14, 1e-14]
     iters = 1
 
     for i in range(0, len(pressure_increments)):
