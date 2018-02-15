@@ -302,12 +302,12 @@ disp = array(disp)
 
 rmse = math.sqrt(np.linalg.norm(disp))
 # Write mse to a file
-with open('results/rmse.txt', 'a') as f:
+with open('rmse.txt', 'a') as f:
     f.write(str(elems[2])+" "+str(elems[1])+" "+str(elems[0])+" "+str(rmse)+"\n")
     f.close()
 
 # To double check displacement,write out the resultant vectors in an exdata file.
-with open("results/displacement"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".exdata", 'w') as fid:
+with open("displacement"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".exdata", 'w') as fid:
     fid.write(' Group name: Displacement\n')
     fid.write(' #Fields=2\n')
     fid.write('  1) coordinates, coordinate, rectangular cartesian, #Components=3\n')
