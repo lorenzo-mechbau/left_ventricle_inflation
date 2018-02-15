@@ -1224,13 +1224,13 @@ def ExportResults(dependentField, deformedFieldUserNumber, decomposition, region
     #deformedField.Destroy()
     # Export deformation.
 
-    #if not os.path.exists("./results"):
-    #    os.makedirs("./results")
+    if not os.path.exists("./results"):
+        os.makedirs("./results")
 
     fields = iron.Fields()
     fields.CreateRegion(region)
-    fields.NodesExport("./" + filename, "FORTRAN")
-    fields.ElementsExport("./" + filename, "FORTRAN")
+    fields.NodesExport("./results/" + filename, "FORTRAN")
+    fields.ElementsExport("./results/" + filename, "FORTRAN")
     fields.Finalise()
 
     # Output
