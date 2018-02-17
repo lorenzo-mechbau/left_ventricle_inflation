@@ -302,7 +302,7 @@ disp = array(disp)
 
 rmse = math.sqrt(np.linalg.norm(disp))
 # Write mse to a file
-with open('results/rmse.txt', 'a') as f:
+with open('results/rmse.txt', 'w') as f:
     f.write(str(elems[2])+" "+str(elems[1])+" "+str(elems[0])+" "+str(rmse)+"\n")
     f.close()
 
