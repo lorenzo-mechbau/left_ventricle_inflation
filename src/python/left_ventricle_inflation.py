@@ -262,8 +262,8 @@ EquationsSetSetUp(equationsSet)
 
 p = 0.0
 for j in range(0,1):
-    pressure_increments = [1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 1.0]
-    tolerances = [1e-5, 1e-5, 1e-5, 1e-5, 1e-5, 1e-5, 1e-5]
+    pressure_increments = [1.0, 1.0, 1.0, 1.0, 1.0]
+    tolerances = [1e-14, 1e-14, 1e-14, 1e-14, 1e-14, 1e-14, 1e-14]
     iters = 1
 
     for i in range(0, len(pressure_increments)):
@@ -302,7 +302,7 @@ disp = array(disp)
 
 rmse = math.sqrt(np.linalg.norm(disp))
 # Write mse to a file
-with open('results/rmse.txt', 'a') as f:
+with open('results/rmse.txt', 'w') as f:
     f.write(str(elems[2])+" "+str(elems[1])+" "+str(elems[0])+" "+str(rmse)+"\n")
     f.close()
 
