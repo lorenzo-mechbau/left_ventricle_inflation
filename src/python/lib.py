@@ -28,18 +28,22 @@ def BasicSetUp(regionUserNumber, coordinateSystemUserNumber):
 
     # Get computational node information for parallel computing
     computationEnvironment = iron.ComputationEnvironment()
+    iron.Context.ComputationEnvironmentGet(computationEnvironment)
     numberOfComputationalNodes = computationEnvironment.NumberOfWorldNodesGet()
     computationalNodeNumber = computationEnvironment.WorldNodeNumberGet()
 
     # Set up 3D RC coordinate system
     coordinateSystem = iron.CoordinateSystem()
-    coordinateSystem.CreateStart(coordinateSystemUserNumber)
+    coordinateSystem.CreateStart(coordinateSystemUserNumber,iron.Context)
     coordinateSystem.dimension = 3
     coordinateSystem.CreateFinish()
 
+    worldRegion = iron.Region()
+    iron.Context.WorldRegionGet(worldRegion)
+    
     # Create world region
     region = iron.Region()
-    region.CreateStart(regionUserNumber, iron.WorldRegion)
+    region.CreateStart(regionUserNumber, worldRegion)
     region.label = "Region"
     region.coordinateSystem = coordinateSystem
     region.CreateFinish()
@@ -58,7 +62,7 @@ def BasisFunction(basisUserNumber, numOfXi, option, collapsed):
     if option[0] == 1:
         # Trilinear basis function for interpolation of geometry.
         basis = iron.Basis()
-        basis.CreateStart(basisUserNumber)
+        basis.CreateStart(basisUserNumber,iron.Context)
         basis.numberOfXi = numOfXi
         basis.type = iron.BasisTypes.LAGRANGE_HERMITE_TP
         basis.interpolationXi = [iron.BasisInterpolationSpecifications.LINEAR_LAGRANGE] * numOfXi
@@ -69,7 +73,7 @@ def BasisFunction(basisUserNumber, numOfXi, option, collapsed):
         print "----> Set up trilinear basis functions for geometry, use element based interpolation for pressure <----\n"
         if collapsed:
             basisCol = iron.Basis()
-            basisCol.CreateStart(basisUserNumber+1)
+            basisCol.CreateStart(basisUserNumber+1,iron.Context)
             basisCol.numberOfXi = numOfXi
             basisCol.type = iron.BasisTypes.LAGRANGE_HERMITE_TP
             basisCol.interpolationXi = [iron.BasisInterpolationSpecifications.LINEAR_LAGRANGE] * numOfXi
@@ -82,7 +86,7 @@ def BasisFunction(basisUserNumber, numOfXi, option, collapsed):
         return basis
     elif option[0] == 2:
         quadBasis = iron.Basis()
-        quadBasis.CreateStart(basisUserNumber[0])
+        quadBasis.CreateStart(basisUserNumber[0],iron.Context)
         quadBasis.InterpolationXiSet([iron.BasisInterpolationSpecifications.QUADRATIC_LAGRANGE]*numOfXi)
         quadBasis.QuadratureNumberOfGaussXiSet([4]*numOfXi)
         quadBasis.QuadratureLocalFaceGaussEvaluateSet(True)
@@ -90,7 +94,7 @@ def BasisFunction(basisUserNumber, numOfXi, option, collapsed):
 
         # Tricubic Hermite basis function for interpolation of geometry.
         cubicBasis = iron.Basis()  # For geometry.
-        cubicBasis.CreateStart(basisUserNumber[1])
+        cubicBasis.CreateStart(basisUserNumber[1],iron.Context)
         cubicBasis.InterpolationXiSet([iron.BasisInterpolationSpecifications.CUBIC_HERMITE] * numOfXi)
         cubicBasis.QuadratureNumberOfGaussXiSet([4] * numOfXi)
         cubicBasis.QuadratureLocalFaceGaussEvaluateSet(True)
@@ -911,7 +915,7 @@ def ProblemSolverSetup(equationsSet,problemUserNumber,maxIter, TOL, cellMLOption
                                 iron.ProblemTypes.FINITE_ELASTICITY,
                                 iron.ProblemSubtypes.NONE]
 
-    problem.CreateStart(problemUserNumber, problemSpecification)
+    problem.CreateStart(problemUserNumber,iron.Context,problemSpecification)
     problem.CreateFinish()
     # Output
     print "----> Set up problem <----\n"
