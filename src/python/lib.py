@@ -145,7 +145,7 @@ def GeometricFieldSetUp(geometricFieldUserNumber, region, decomposition, option)
     # Set up geometry field 
     geometricField = iron.Field()  # Initialise
     geometricField.CreateStart(geometricFieldUserNumber, region)
-    geometricField.MeshDecompositionSet(decomposition)
+    geometricField.DecompositionSet(decomposition)
     geometricField.VariableLabelSet(iron.FieldVariableTypes.U, "Geometry")
 
     if option[0] == 2:
@@ -287,7 +287,7 @@ def FibreFieldSetUp(fibreFieldUserNumber, region, decomposition, geometricField,
     fibreField = iron.Field()
     fibreField.CreateStart(fibreFieldUserNumber, region)
     fibreField.TypeSet(iron.FieldTypes.FIBRE)
-    fibreField.MeshDecompositionSet(decomposition)
+    fibreField.DecompositionSet(decomposition)
     fibreField.GeometricFieldSet(geometricField)
     fibreField.VariableLabelSet(iron.FieldVariableTypes.U, "Fibre")
 
@@ -378,7 +378,7 @@ def MaterialFieldSetUp(materialFieldUserNumber, region, decomposition, geometric
     materialField = iron.Field()
     materialField.CreateStart(materialFieldUserNumber, region)
     materialField.TypeSet(iron.FieldTypes.MATERIAL)
-    materialField.MeshDecompositionSet(decomposition)
+    materialField.DecompositionSet(decomposition)
     materialField.GeometricFieldSet(geometricField)
     materialField.VariableLabelSet(iron.FieldVariableTypes.U, "Material")
     materialField.NumberOfVariablesSet(1)
@@ -850,7 +850,7 @@ def StrainFieldSetUp(strainFieldUserNumber, region, decomposition, geometricFiel
     # Set up strain field for output
     strainField = iron.Field()
     strainField.CreateStart(strainFieldUserNumber, region)
-    strainField.MeshDecompositionSet(decomposition)
+    strainField.DecompositionSet(decomposition)
     strainField.TypeSet(iron.FieldTypes.GENERAL)
     strainField.GeometricFieldSet(geometricField)
     strainField.DependentTypeSet(iron.FieldDependentTypes.DEPENDENT)
@@ -1201,7 +1201,7 @@ def ExportResults(dependentField, deformedFieldUserNumber, decomposition, region
     # Copy over deformed field.
     deformedField = iron.Field()
     deformedField.CreateStart(deformedFieldUserNumber, region)
-    deformedField.MeshDecompositionSet(decomposition)
+    deformedField.DecompositionSet(decomposition)
     deformedField.TypeSet(iron.FieldTypes.GEOMETRIC)
     deformedField.VariableLabelSet(iron.FieldVariableTypes.U, "DeformedGeometry")
 
