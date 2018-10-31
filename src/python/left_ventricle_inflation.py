@@ -106,8 +106,8 @@ elems = [8,8,2]
 #if not os.path.exists("ellipse_benchmark_lin_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".exnode"):
 #    os.system(cmd)
 
-inputNodes = exfile.Exnode("ellipse_benchmark_lin_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".exnode")
-inputElems = exfile.Exelem("ellipse_benchmark_lin_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".exelem")
+inputNodes = exfile.Exnode(str(sys.argv[1])+"ellipse_benchmark_lin_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".exnode")
+inputElems = exfile.Exelem(str(sys.argv[1])+"ellipse_benchmark_lin_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".exelem")
 num_apex_elem = elems[1]*elems[2]
 apex_elems = []
 for i in range(0, elems[2]):
@@ -206,7 +206,7 @@ for node_num in range(1, inputNodes.num_nodes+1):
             if abs(temp_y) < TOL:
                 endocardial_nodes.append(node_num)
 
-unrefinedNodes = exfile.Exnode("unrefined_mesh.exnode")
+unrefinedNodes = exfile.Exnode(str(sys.argv[1])+"unrefined_mesh.exnode")
 unref_nodes = ExtractNodeCoords(unrefinedNodes, "coordinates")
 no_base_unref_nodes = []
 for node in unref_nodes:
@@ -288,7 +288,7 @@ filename = "LVInflation_trilinear_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elem
 ExportResults(dependentField, deformedFieldUserNumber, decomposition, region, filename, option)
 
 # Evaluate displacement
-deformed = exfile.Exnode("LVInflation_trilinear_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".part0.exnode")
+deformed = exfile.Exnode(str(sys.argv[1])+"LVInflation_trilinear_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".part0.exnode")
 defNodes = ExtractNodeCoords(deformed, "DeformedGeometry")
 defNodes = array(defNodes)
 all_nodes = array(all_nodes)

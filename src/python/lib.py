@@ -27,9 +27,14 @@ def BasicSetUp(regionUserNumber, coordinateSystemUserNumber):
                            #"Diagnostics",["DOMAIN_MAPPINGS_LOCAL_FROM_GLOBAL_CALCULATE"])
 
     # Get computational node information for parallel computing
-    computationEnvironment = iron.ComputationEnvironment()
-    numberOfComputationalNodes = computationEnvironment.NumberOfWorldNodesGet()
-    computationalNodeNumber = computationEnvironment.WorldNodeNumberGet()
+    #computationEnvironment = iron.ComputationEnvironment()
+    #numberOfComputationalNodes = computationEnvironment.NumberOfWorldNodesGet()
+    #computationalNodeNumber = computationEnvironment.WorldNodeNumberGet()
+    #computationEnvironment = iron.ComputationEnvironment()
+    #numberOfComputationalNodes = computationEnvironment.NumberOfWorldNodesGet()
+    #computationalNodeNumber = computationEnvironment.WorldNodeNumberGet()
+    numberOfComputationalNodes = iron.ComputationalNumberOfNodesGet()
+    computationalNodeNumber = iron.ComputationalNodeNumberGet()
 
     # Set up 3D RC coordinate system
     coordinateSystem = iron.CoordinateSystem()
