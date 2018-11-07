@@ -70,6 +70,12 @@ from collections import OrderedDict
 from lib import *
 from numpy import array
 
+# Path from command line argument or cd
+if len(sys.argv) > 1:
+    file_root_directory = sys.argv[1]
+else:
+    file_root_directory = os.path.dirname(__file__)
+
 ### Set problem parameters3
 numOfXi = 3
 option = [1] # Trilinear
@@ -106,8 +112,10 @@ elems = [8,8,2]
 #if not os.path.exists("ellipse_benchmark_lin_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".exnode"):
 #    os.system(cmd)
 
-inputNodes = exfile.Exnode(str(sys.argv[1])+"ellipse_benchmark_lin_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".exnode")
-inputElems = exfile.Exelem(str(sys.argv[1])+"ellipse_benchmark_lin_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".exelem")
+ellipsebenchmarklin_fileName = os.path.join(file_root_directory, "ellipse_benchmark_lin_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0]))
+inputNodes = exfile.Exnode(ellipsebenchmarklin_fileName+".exnode")
+inputElems = exfile.Exelem(ellipsebenchmarklin_fileName+".exelem")
+
 num_apex_elem = elems[1]*elems[2]
 apex_elems = []
 for i in range(0, elems[2]):
@@ -206,7 +214,8 @@ for node_num in range(1, inputNodes.num_nodes+1):
             if abs(temp_y) < TOL:
                 endocardial_nodes.append(node_num)
 
-unrefinedNodes = exfile.Exnode(str(sys.argv[1])+"unrefined_mesh.exnode")
+unrefinedNodes_fileName = os.path.join(file_root_directory,"unrefined_mesh.exnode")
+unrefinedNodes = exfile.Exnode(unrefinedNodes_fileName)
 unref_nodes = ExtractNodeCoords(unrefinedNodes, "coordinates")
 no_base_unref_nodes = []
 for node in unref_nodes:
@@ -288,7 +297,8 @@ filename = "LVInflation_trilinear_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elem
 ExportResults(dependentField, deformedFieldUserNumber, decomposition, region, filename, option)
 
 # Evaluate displacement
-deformed = exfile.Exnode(str(sys.argv[1])+"LVInflation_trilinear_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".part0.exnode")
+deformed_fileName = os.path.join(file_root_directory, "LVInflation_trilinear_"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0])+".part0.exnode")
+deformed = exfile.Exnode(deformed_fileName)
 defNodes = ExtractNodeCoords(deformed, "DeformedGeometry")
 defNodes = array(defNodes)
 all_nodes = array(all_nodes)
@@ -324,4 +334,6 @@ with open("results/displacement"+str(elems[2])+"-"+str(elems[1])+"-"+str(elems[0
         fid.write(' '+str(all_nodes[idx-1][0])+' '+str(all_nodes[idx-1][1])+' '+str(all_nodes[idx-1][2])+'\n')
         fid.write(' '+str(disp[i][0])+' '+str(disp[i][1])+' '+str(disp[i][2])+'\n')
 
+# Finalise OpenCMISS-Iron
+iron.Finalise()
 
